@@ -26,18 +26,14 @@ class Timer extends Component {
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
-  startStop() {
+  startStop(timeNow) {
     if (this.state.isToggleOn) {
-      clearInterval(this.timerID);
-      this.timerID = setInterval(() => this.tick(), 100);
       this.setState({
-        timeStart: new Date().getTime(),
+        timeStart: timeNow,
         isToggleOn: false
       });
       return;
     } else if (!this.state.isToggleOn) {
-
-      clearInterval(this.timerID);
       this.setState({
         isToggleOn: true,
         pause:true,
@@ -45,11 +41,10 @@ class Timer extends Component {
       });
       return;
     } else if (this.state.reset) {
-      clearInterval(this.timerID);
-      this.timerID = setInterval(() => this.tick(), 100);
       this.setState({
-        timeStart: new Date().getTime(),
-        reset: false
+        timeStart: timeNow,
+        reset: false,
+        isToggleOn: false
       });
       return;
     }
@@ -59,10 +54,9 @@ class Timer extends Component {
     this.setState({isToggleOn: true,timeStart: 0,watch:0,prevWatch:0, reset: true, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0});
   }
   splitTime() {
-    this.setState({time: '00:00:00 000',timeStart:new Date().getTime(), watch: 0, mili: 0, sec: 0, min: 0, hour: 0});
+    this.setState({time: '00:00:00 000',timeStart:new Date().getTime(),prevWatch:0, watch: 0, mili: 0, sec: 0, min: 0, hour: 0});
   }
-  tick() {
-    let timeNow = new Date().getTime();
+  tick(timeNow) {
     let watch = timeNow - this.state.timeStart;
     let time = watch + this.state.prevWatch
     this.setState({watch: time});
@@ -117,19 +111,31 @@ class StopWatch extends Component {
     clearInterval(this.timerID);
   }
   startStop() {
-    this.timer.current.startStop();
-    this.splitTimer.current.startStop();
+    let timeNow = new Date().getTime();
     if (this.state.isToggleOn) {
+      clearInterval(this.timerID);
+      this.timer.current.startStop(timeNow);
+      this.splitTimer.current.startStop(timeNow);
       this.setState({
         isToggleOn: false
       });
+      this.timerID = setInterval(() => this.tick(), 100);
     } else {
+      clearInterval(this.timerID);
+      this.timer.current.startStop(timeNow);
+      this.splitTimer.current.startStop(timeNow);
       this.setState({
         isToggleOn: true
       });
     }
   }
+  tick(){
+    let timeNow = new Date().getTime();
+    this.timer.current.tick(timeNow);
+    this.splitTimer.current.tick(timeNow);
+  }
   reset() {
+    clearInterval(this.timerID);
     this.timer.current.reset();
     this.splitTimer.current.reset();
     this.setState({isToggleOn: true, split: []});
