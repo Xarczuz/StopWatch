@@ -1,25 +1,30 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import './StopWatch.css';
 
 function Split(prop) {
   const split = prop.split;
-  const listTimes = split.map((time, index) => <li key={index}>{time}</li>);
-  return <ul>{listTimes}</ul>;
+  const listTimes = split.map((time, index) => (
+    <li key={index}>
+      <p>{time[0]}</p>
+      <p>{time[1]}</p>
+    </li>
+  ));
+  return <ol>{listTimes}</ol>;
 }
 
 class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = {isToggleOn: false, reset: false, timeStart: new Date().getTime(),pause:false,prevWatch:0, watch: 0, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0};
+    this.state = { isToggleOn: false, reset: false, timeStart: new Date().getTime(), pause: false, prevWatch: 0, watch: 0, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0 };
   }
   componentDidMount() {
     if (this.state.isToggleOn && this.state.reset === false) {
       this.timerID = setInterval(() => this.tick(), 100);
-      this.setState({isToggleOn: false});
+      this.setState({ isToggleOn: false });
     } else {
       clearInterval(this.timerID);
-      this.setState({isToggleOn: true});
+      this.setState({ isToggleOn: true });
     }
   }
 
@@ -36,7 +41,7 @@ class Timer extends Component {
     } else if (!this.state.isToggleOn) {
       this.setState({
         isToggleOn: true,
-        pause:true,
+        pause: true,
         prevWatch: this.state.watch
       });
       return;
@@ -51,16 +56,15 @@ class Timer extends Component {
   }
   reset() {
     clearInterval(this.timerID);
-    this.setState({isToggleOn: true,timeStart: 0,watch:0,prevWatch:0, reset: true, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0});
+    this.setState({ isToggleOn: true, timeStart: 0, watch: 0, prevWatch: 0, reset: true, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0 });
   }
   splitTime() {
-    this.setState({time: '00:00:00 000',timeStart:new Date().getTime(),prevWatch:0, watch: 0, mili: 0, sec: 0, min: 0, hour: 0});
+    this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevWatch: 0, watch: 0, mili: 0, sec: 0, min: 0, hour: 0 });
   }
   tick(timeNow) {
     let watch = timeNow - this.state.timeStart;
-    let time = watch + this.state.prevWatch
-    this.setState({watch: time});
-    this.time();
+    let time = watch + this.state.prevWatch;
+    this.setState({ watch: time }, () => this.time());
   }
   time() {
     let watch = new Date(this.state.watch);
@@ -92,14 +96,14 @@ class Timer extends Component {
     });
   }
   render() {
-    return <h1>{this.state.time}</h1>;
+    return <span className='timer'>{this.state.time}</span>;
   }
 }
 
 class StopWatch extends Component {
   constructor(props) {
     super(props);
-    this.state = {isToggleOn: true, isSplitToggleOn: false, split: []};
+    this.state = { isToggleOn: true, isSplitToggleOn: false, split: [] };
     this.startStop = this.startStop.bind(this);
     this.reset = this.reset.bind(this);
     this.split = this.split.bind(this);
@@ -129,7 +133,7 @@ class StopWatch extends Component {
       });
     }
   }
-  tick(){
+  tick() {
     let timeNow = new Date().getTime();
     this.timer.current.tick(timeNow);
     this.splitTimer.current.tick(timeNow);
@@ -138,11 +142,11 @@ class StopWatch extends Component {
     clearInterval(this.timerID);
     this.timer.current.reset();
     this.splitTimer.current.reset();
-    this.setState({isToggleOn: true, split: []});
+    this.setState({ isToggleOn: true, split: [] });
   }
   split() {
     this.setState({
-      split: [...this.state.split, this.splitTimer.current.state.time]
+      split: [...this.state.split, ['Split Time: ' + this.splitTimer.current.state.time, ' Total Time: ' + this.timer.current.state.time]]
     });
     this.splitTimer.current.splitTime();
   }
@@ -152,14 +156,14 @@ class StopWatch extends Component {
       <div>
         <h1>StopWatch</h1>
         <div>
-          timer <Timer ref={this.timer} isToggleOn={this.state.isToggleOn} />
+          <p className='label' id='timer'> Timer: <Timer ref={this.timer} isToggleOn={this.state.isToggleOn} /></p>
         </div>
         <div>
-          split timer <Timer ref={this.splitTimer} isToggleOn={this.state.isToggleOn} />
+          <p className='label' id ='splitTimer'> Split timer:<Timer ref={this.splitTimer} isToggleOn={this.state.isToggleOn} /></p>
         </div>
-        <button onClick={this.startStop}> {this.state.isToggleOn ? 'Start' : 'Stop'}</button>
-        <button onClick={this.split}>Split</button>
-        <button onClick={this.reset}>Reset</button>
+        <button id='start' onClick={this.startStop}> {this.state.isToggleOn ? 'Start' : 'Stop'}</button>
+        <button id='split' onClick={this.split}>Split</button>
+        <button id='reset' onClick={this.reset}>Reset</button>
         <Split split={this.state.split} />
       </div>
     );

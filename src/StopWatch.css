@@ -1,0 +1,47 @@
+.label{
+    font-size: 24px;
+    font-weight: bold;
+    text-underline-position: below;
+    text-decoration: underline;
+    display: inline-block;
+    padding:0px;
+    margin:0px;
+}
+#timer{
+font-size: 50px;
+}
+button{
+    border-radius: 100px;
+    height: 100px;
+    width: 100px;
+    
+    background-color: rgb(86, 236, 27);
+    user-select: none;
+    box-lines: none;
+    outline: none;
+}
+#start{
+    background: rgb(28, 184, 65); /* this is a green */
+}
+#split{
+    background: rgb(223, 117, 20); /* this is an orange */
+}
+#reset{
+    background: rgb(202, 60, 60); /* this is a maroon */
+}
+li{
+    border: solid rgb(167, 148, 148) 3px;
+    padding: 0px;
+    width: 250px;
+    margin: 0px;
+margin-left: 25px;
+
+}
+li p{
+    margin: 5px;
+}
+ol {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
