@@ -96,7 +96,7 @@ class Timer extends Component {
     });
   }
   render() {
-    return <span className='timer'>{this.state.time}</span>;
+    return <span className="timer">{this.state.time}</span>;
   }
 }
 
@@ -153,17 +153,31 @@ class StopWatch extends Component {
 
   render() {
     return (
-      <div>
+      <div id="stopWatch">
         <h1>StopWatch</h1>
         <div>
-          <p className='label' id='timer'> Timer: <Timer ref={this.timer} isToggleOn={this.state.isToggleOn} /></p>
+          <p className="label" id="timer">
+            {' '}
+            Timer: <Timer ref={this.timer} isToggleOn={this.state.isToggleOn} />
+          </p>
         </div>
         <div>
-          <p className='label' id ='splitTimer'> Split timer:<Timer ref={this.splitTimer} isToggleOn={this.state.isToggleOn} /></p>
+          <p className="label" id="splitTimer">
+            {' '}
+            Split timer:
+            <Timer ref={this.splitTimer} isToggleOn={this.state.isToggleOn} />
+          </p>
         </div>
-        <button id='start' onClick={this.startStop}> {this.state.isToggleOn ? 'Start' : 'Stop'}</button>
-        <button id='split' onClick={this.split}>Split</button>
-        <button id='reset' onClick={this.reset}>Reset</button>
+        <button id="start" onClick={this.startStop}>
+          {' '}
+          {this.state.isToggleOn ? 'Start' : 'Stop'}
+        </button>
+        <button id="split" onClick={this.split}>
+          Split
+        </button>
+        <button id="reset" onClick={this.reset}>
+          Reset
+        </button>
         <Split split={this.state.split} />
       </div>
     );

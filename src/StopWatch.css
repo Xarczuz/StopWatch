@@ -1,47 +1,64 @@
-.label{
-    font-size: 24px;
-    font-weight: bold;
-    text-underline-position: below;
-    text-decoration: underline;
-    display: inline-block;
-    padding:0px;
-    margin:0px;
+#stopWatch {
+  overflow: auto;
+  height: 55%;
+  width: 50%;
+  border: solid blue 5px;
+  padding: 5px;
+  border-radius: 50px;
+  background-color: rgb(104, 160, 243);
 }
-#timer{
-font-size: 50px;
-}
-button{
-    border-radius: 100px;
-    height: 100px;
-    width: 100px;
-    
-    background-color: rgb(86, 236, 27);
-    user-select: none;
-    box-lines: none;
-    outline: none;
-}
-#start{
-    background: rgb(28, 184, 65); /* this is a green */
-}
-#split{
-    background: rgb(223, 117, 20); /* this is an orange */
-}
-#reset{
-    background: rgb(202, 60, 60); /* this is a maroon */
-}
-li{
-    border: solid rgb(167, 148, 148) 3px;
-    padding: 0px;
-    width: 250px;
-    margin: 0px;
-margin-left: 25px;
 
+.label {
+  font-size: 24px;
+  font-weight: bold;
+  text-underline-position: below;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
 }
-li p{
-    margin: 5px;
+#timer {
+  font-size: 50px;
+}
+button {
+  border-radius: 100px;
+  height: 100px;
+  width: 100px;
+
+  background-color: rgb(86, 236, 27);
+  user-select: none;
+  box-lines: none;
+  outline: none;
+}
+#start {
+  background: rgb(28, 184, 65); /* this is a green */
+}
+#split {
+  background: rgb(223, 117, 20); /* this is an orange */
+}
+#reset {
+  background: rgb(202, 60, 60); /* this is a maroon */
+}
+li {
+  border: solid rgb(54, 52, 52) 3px;
+  padding: 5px;
+  width: 550px;
+  height: fit-content;
+  margin: 0px;
+  margin-left: 25px;
+}
+li p {
+  margin: 5px;
+  display: inline;
+  font-weight: bold;
+  color: antiquewhite;
 }
 ol {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
+  border: solid black 2px;
+  padding: 5px;
+  /* display: flex; */
+  /* flex-direction: row;
+    flex-wrap: wrap; */
+  overflow: auto;
+  height: 300px;
+}
