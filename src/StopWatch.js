@@ -12,66 +12,43 @@ function Split(prop) {
   ));
   return <ol>{listTimes}</ol>;
 }
-
 class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = { isToggleOn: false, reset: false, timeStart: new Date().getTime(), pause: false, prevWatch: 0, watch: 0, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0 };
-  }
-  componentDidMount() {
-    if (this.state.isToggleOn && this.state.reset === false) {
-      this.timerID = setInterval(() => this.tick(), 100);
-      this.setState({ isToggleOn: false });
-    } else {
-      clearInterval(this.timerID);
-      this.setState({ isToggleOn: true });
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID);
+    this.state = { timerOn: true, timeStart: new Date().getTime(), pause: false, prevTimeElapsed: 0, timeElapsed: 0, time: '00:00:00 000' };
   }
   startStop(timeNow) {
-    if (this.state.isToggleOn) {
+    if (this.state.timerOn) {
       this.setState({
         timeStart: timeNow,
-        isToggleOn: false
+        timerOn: false
       });
-      return;
-    } else if (!this.state.isToggleOn) {
+   
+    } else if (!this.state.timerOn) {
       this.setState({
-        isToggleOn: true,
+        timerOn: true,
         pause: true,
-        prevWatch: this.state.watch
+        prevTimeElapsed: this.state.timeElapsed
       });
-      return;
-    } else if (this.state.reset) {
-      this.setState({
-        timeStart: timeNow,
-        reset: false,
-        isToggleOn: false
-      });
-      return;
-    }
+   }
   }
   reset() {
-    clearInterval(this.timerID);
-    this.setState({ isToggleOn: true, timeStart: 0, watch: 0, prevWatch: 0, reset: true, time: '00:00:00 000', mili: 0, sec: 0, min: 0, hour: 0 });
+    this.setState({ timerOn: true, timeStart: 0, timeElapsed: 0, prevTimeElapsed: 0, time: '00:00:00 000'});
   }
   splitTime() {
-    this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevWatch: 0, watch: 0, mili: 0, sec: 0, min: 0, hour: 0 });
+    this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevTimeElapsed: 0, timeElapsed: 0 });
   }
   tick(timeNow) {
-    let watch = timeNow - this.state.timeStart;
-    let time = watch + this.state.prevWatch;
-    this.setState({ watch: time }, () => this.time());
+    let timeElapsed = timeNow - this.state.timeStart;
+    let time = timeElapsed + this.state.prevTimeElapsed;
+    this.setState({ timeElapsed: time }, () => this.time());
   }
   time() {
-    let watch = new Date(this.state.watch);
-    let mili = watch.getUTCMilliseconds();
-    let hour = watch.getUTCHours();
-    let min = watch.getUTCMinutes();
-    let sec = watch.getUTCSeconds();
+    let timeElapsed = new Date(this.state.timeElapsed);
+    let mili = timeElapsed.getUTCMilliseconds();
+    let hour = timeElapsed.getUTCHours();
+    let min = timeElapsed.getUTCMinutes();
+    let sec = timeElapsed.getUTCSeconds();
 
     if (mili < 10) {
       mili = '00' + mili;
@@ -81,15 +58,12 @@ class Timer extends Component {
     if (sec < 10) {
       sec = '0' + sec;
     }
-
     if (min < 10) {
       min = '0' + min;
     }
-
     if (hour < 10) {
       hour = '0' + hour;
     }
-
     let time = hour.toString() + ':' + min.toString() + ':' + sec.toString() + ' ' + mili.toString();
     this.setState({
       time: time
@@ -110,7 +84,6 @@ class StopWatch extends Component {
     this.timer = React.createRef();
     this.splitTimer = React.createRef();
   }
-  componentDidMount() {}
   componentWillUnmount() {
     clearInterval(this.timerID);
   }
@@ -180,5 +153,4 @@ class StopWatch extends Component {
     );
   }
 }
-
 export default StopWatch;
