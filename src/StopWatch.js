@@ -78,6 +78,7 @@ class StopWatch extends Component {
     this.startStop = this.startStop.bind(this);
     this.reset = this.reset.bind(this);
     this.split = this.split.bind(this);
+    this.saveToFile = this.saveToFile.bind(this);
     this.timer = React.createRef();
     this.splitTimer = React.createRef();
   }
@@ -144,9 +145,31 @@ class StopWatch extends Component {
         <button id="reset" onClick={this.reset}>
           Reset
         </button>
+        <button id="save" onClick={this.saveToFile}>
+          Save Times
+        </button>
         <Split split={this.state.split} />
       </div>
     );
   }
+  
+  saveToFile(){
+    let filename = "times.txt";
+    let text = this.state.split.toString();
+    var link = document.createElement("a");
+    link.setAttribute("target","_blank");
+    if(Blob !== undefined) {
+        var blob = new Blob([text], {type: "text/plain"});
+        link.setAttribute("href", URL.createObjectURL(blob));
+    } else {
+        link.setAttribute("href","data:text/plain," + encodeURIComponent(text));
+    }
+    link.setAttribute("download",filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }
+
+
 export default StopWatch;
