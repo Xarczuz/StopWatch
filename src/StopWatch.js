@@ -157,19 +157,16 @@ class StopWatch extends Component {
         <h1>StopWatch</h1>
         <div>
           <p className="label" id="timer">
-            {' '}
             Timer: <Timer ref={this.timer} isToggleOn={this.state.isToggleOn} />
           </p>
         </div>
         <div>
           <p className="label" id="splitTimer">
-            {' '}
             Split timer:
             <Timer ref={this.splitTimer} isToggleOn={this.state.isToggleOn} />
           </p>
         </div>
         <button id="start" onClick={this.startStop}>
-          {' '}
           {this.state.isToggleOn ? 'Start' : 'Stop'}
         </button>
         <button id="split" onClick={this.split}>
