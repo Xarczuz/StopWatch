@@ -157,13 +157,7 @@ class StopWatch extends Component {
     let filename = "times.txt";
     let text = this.state.split.toString();
     var link = document.createElement("a");
-    link.setAttribute("target","_blank");
-    if(Blob !== undefined) {
-        var blob = new Blob([text], {type: "text/plain"});
-        link.setAttribute("href", URL.createObjectURL(blob));
-    } else {
-        link.setAttribute("href","data:text/plain," + encodeURIComponent(text));
-    }
+    link.setAttribute("href","data:text/plain," + text);
     link.setAttribute("download",filename);
     document.body.appendChild(link);
     link.click();
