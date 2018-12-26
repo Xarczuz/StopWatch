@@ -23,17 +23,16 @@ class Timer extends Component {
         timeStart: timeNow,
         timerOn: false
       });
-   
     } else if (!this.state.timerOn) {
       this.setState({
         timerOn: true,
         pause: true,
         prevTimeElapsed: this.state.timeElapsed
       });
-   }
+    }
   }
   reset() {
-    this.setState({ timerOn: true, timeStart: 0, timeElapsed: 0, prevTimeElapsed: 0, time: '00:00:00 000'});
+    this.setState({ timerOn: true, timeStart: 0, timeElapsed: 0, prevTimeElapsed: 0, time: '00:00:00 000' });
   }
   splitTime() {
     this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevTimeElapsed: 0, timeElapsed: 0 });
