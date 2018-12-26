@@ -56,9 +56,6 @@ li p {
 ol {
   border: solid black 2px;
   padding: 5px;
-  /* display: flex; */
-  /* flex-direction: row;
-    flex-wrap: wrap; */
   overflow: auto;
   height: 300px;
 }
