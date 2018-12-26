@@ -90,7 +90,6 @@ class StopWatch extends Component {
   startStop() {
     let timeNow = new Date().getTime();
     if (this.state.isToggleOn) {
-      clearInterval(this.timerID);
       this.timer.current.startStop(timeNow);
       this.splitTimer.current.startStop(timeNow);
       this.setState({
