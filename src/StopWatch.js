@@ -15,7 +15,7 @@ function Split(prop) {
 class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = { timerOn: true, timeStart: new Date().getTime(), pause: false, prevTimeElapsed: 0, timeElapsed: 0, time: '00:00:00 000' };
+    this.state = { timerOn: true, timeStart: 0, prevTimeElapsed: 0, timeElapsed: 0, time: '00:00:00 000' };
   }
   startStop(timeNow) {
     if (this.state.timerOn) {
@@ -26,7 +26,6 @@ class Timer extends Component {
     } else if (!this.state.timerOn) {
       this.setState({
         timerOn: true,
-        pause: true,
         prevTimeElapsed: this.state.timeElapsed
       });
     }
@@ -38,9 +37,8 @@ class Timer extends Component {
     this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevTimeElapsed: 0, timeElapsed: 0 });
   }
   tick(timeNow) {
-    let timeElapsed = timeNow - this.state.timeStart;
-    let time = timeElapsed + this.state.prevTimeElapsed;
-    this.setState({ timeElapsed: time }, () => this.time());
+    let timeElapsed = timeNow - this.state.timeStart + this.state.prevTimeElapsed;
+    this.setState({ timeElapsed: timeElapsed }, () => this.time());
   }
   time() {
     let timeElapsed = new Date(this.state.timeElapsed);
