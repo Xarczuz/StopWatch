@@ -165,5 +165,4 @@ class StopWatch extends Component {
   }
 }
 
-
 export default StopWatch;
