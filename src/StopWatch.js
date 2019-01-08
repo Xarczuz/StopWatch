@@ -15,7 +15,7 @@ function Split(prop) {
 class Timer extends Component {
   constructor(props) {
     super(props);
-    this.state = { timerOn: true, timeStart: 0, prevTimeElapsed: 0, timeElapsed: 0, time: '00:00:00 000' };
+    this.state = { timerOn: true, timeStart: 0, prevTimeElapsed: 0, timeElapsed: 0, time: '00:00:00.000' };
   }
   startStop(timeNow) {
     if (this.state.timerOn) {
@@ -31,10 +31,10 @@ class Timer extends Component {
     }
   }
   reset() {
-    this.setState({ timerOn: true, timeStart: 0, timeElapsed: 0, prevTimeElapsed: 0, time: '00:00:00 000' });
+    this.setState({ timerOn: true, timeStart: 0, timeElapsed: 0, prevTimeElapsed: 0, time: '00:00:00.000' });
   }
   splitTime() {
-    this.setState({ time: '00:00:00 000', timeStart: new Date().getTime(), prevTimeElapsed: 0, timeElapsed: 0 });
+    this.setState({ time: '00:00:00.000', timeStart: new Date().getTime(), prevTimeElapsed: 0, timeElapsed: 0 });
   }
   tick(timeNow) {
     let timeElapsed = timeNow - this.state.timeStart + this.state.prevTimeElapsed;
@@ -61,7 +61,7 @@ class Timer extends Component {
     if (hour < 10) {
       hour = '0' + hour;
     }
-    let time = hour.toString() + ':' + min.toString() + ':' + sec.toString() + ' ' + mili.toString();
+    let time = hour.toString() + ':' + min.toString() + ':' + sec.toString() + '.' + mili.toString();
     this.setState({
       time: time
     });
@@ -93,7 +93,7 @@ class StopWatch extends Component {
       this.setState({
         isToggleOn: false
       });
-      this.timerID = setInterval(() => this.tick(), 100);
+      this.timerID = setInterval(() => this.tick(), 33);
     } else {
       clearInterval(this.timerID);
       this.timer.current.startStop(timeNow);
@@ -157,7 +157,7 @@ class StopWatch extends Component {
     let filename = "times.txt";
     let text = this.state.split.toString();
     var link = document.createElement("a");
-    link.setAttribute("href","data:text/plain," + text);
+    link.setAttribute("href","data: text/plain," + text);
     link.setAttribute("download",filename);
     document.body.appendChild(link);
     link.click();
